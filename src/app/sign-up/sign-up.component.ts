@@ -17,7 +17,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
     this.nameControl = new FormControl('', [ Validators.required ]);
     this.emailControl = new FormControl('', [ Validators.required, Validators.email ]);
-    // TODO: add mathc password validaion using form group
+    // TODO: add match password validaion using form group
     // http://www.codiodes.com/match-password-validation/
     this.pswdControl = new FormControl('', [
       Validators.minLength(6),
