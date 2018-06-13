@@ -1,0 +1,10 @@
+.signup-form {
+  margin: 0 auto;
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.field-wrap {
+  width: 100%;
+}
