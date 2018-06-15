@@ -4,20 +4,25 @@
 <form class="signup-form" >
   <mat-form-field class="field-wrap">
     <input matInput placeholder="Your name" [formControl]="nameControl">
-    <mat-error *ngIf="nameControl.invalid">This field is required</mat-error>
+    <mat-error *ngIf="nameControl.invalid">{{ getErrorMessage(nameControl.errors) }}</mat-error>
   </mat-form-field>
 
   <mat-form-field class="field-wrap">
     <input matInput type="email" placeholder="Email" [formControl]="emailControl">
+    <mat-error *ngIf="emailControl.invalid">{{ getErrorMessage(emailControl.errors) }}</mat-error>
   </mat-form-field>
 
-  <mat-form-field class="field-wrap">
-    <input matInput type="password" placeholder="Password" [formControl]="pswdControl">
-  </mat-form-field>
+  <div [formGroup]="password">
+    <mat-form-field class="field-wrap">
+      <input matInput type="password" placeholder="Password" formControlName="pswdControl">
+      <mat-error *ngIf="password.controls.pswdControl.invalid">{{ getErrorMessage(password.controls.pswdControl.errors) }}</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="field-wrap">
-    <input matInput type="password" placeholder="Confirm password" [formControl]="pswdSecondControl">
-  </mat-form-field>
+    <mat-form-field class="field-wrap">
+      <input matInput type="password" placeholder="Confirm password" formControlName="pswdSecondControl">
+      <mat-error *ngIf="password.controls.pswdSecondControl.invalid">{{ getErrorMessage(password.controls.pswdSecondControl.errors) }}</mat-error>
+    </mat-form-field>
+  </div>
 
   <button mat-raised-button color="primary">Submit</button>
 </form>
