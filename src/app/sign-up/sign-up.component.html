@@ -15,12 +15,12 @@
   <div [formGroup]="password">
     <mat-form-field class="field-wrap">
       <input matInput type="password" placeholder="Password" formControlName="pswdControl">
-      <mat-error *ngIf="password.controls.pswdControl.invalid">{{ getErrorMessage(password.controls.pswdControl.errors) }}</mat-error>
+      <mat-error *ngIf="password.invalid">{{ getErrorMessage(password.controls.pswdControl.errors) }}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field-wrap">
       <input matInput type="password" placeholder="Confirm password" formControlName="pswdSecondControl">
-      <mat-error *ngIf="password.controls.pswdSecondControl.invalid">{{ getErrorMessage(password.controls.pswdSecondControl.errors) }}</mat-error>
+      <mat-error *ngIf="password.invalid">{{ getErrorMessage(password.controls.pswdSecondControl.errors) }}</mat-error>
     </mat-form-field>
   </div>
 

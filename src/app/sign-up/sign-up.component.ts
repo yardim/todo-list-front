@@ -33,18 +33,6 @@ export class SignUpComponent implements OnInit {
     }, [
         matchPassword
     ]);
-
-    // TODO: add match password validaion using form group
-    // http://www.codiodes.com/match-password-validation/
-    // this.pswdControl = new FormControl('', [
-    //   Validators.minLength(6),
-    //   Validators.required
-    // ]);
-    // this.pswdSecondControl = new FormControl('', [
-    //   Validators.required,
-    //   Validators.minLength(6),
-    //   matchPassword(this.pswdControl)
-    // ]);
   }
 
   public getErrorMessage(errors: any): string {
