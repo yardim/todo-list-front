@@ -1,15 +1,15 @@
 <h2>
   Sign up
 </h2>
-<form class="signup-form" >
+<form class="signup-form" [formGroup]="signUpForm">
   <mat-form-field class="field-wrap">
-    <input matInput placeholder="Your name" [formControl]="nameControl">
-    <mat-error *ngIf="nameControl.invalid">{{ getErrorMessage(nameControl.errors) }}</mat-error>
+    <input matInput placeholder="Your name" formControlName="nameControl">
+    <mat-error *ngIf="signUpForm.controls.nameControl.invalid">{{ getErrorMessage(signUpForm.controls.nameControl.errors) }}</mat-error>
   </mat-form-field>
 
   <mat-form-field class="field-wrap">
-    <input matInput type="email" placeholder="Email" [formControl]="emailControl">
-    <mat-error *ngIf="emailControl.invalid">{{ getErrorMessage(emailControl.errors) }}</mat-error>
+    <input matInput type="email" placeholder="Email" formControlName="emailControl">
+    <mat-error *ngIf="signUpForm.controls.emailControl.invalid">{{ getErrorMessage(signUpForm.controls.emailControl.errors) }}</mat-error>
   </mat-form-field>
 
   <div [formGroup]="password">
@@ -24,5 +24,7 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary">Submit</button>
+  <button mat-raised-button color="primary" [disabled]="signUpForm.invalid">
+    Submit
+  </button>
 </form>

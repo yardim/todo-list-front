@@ -9,18 +9,12 @@ import { matchPassword } from './validations';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  public nameControl: FormControl;
-  public emailControl: FormControl;
+  public signUpForm: FormGroup;
   public password: FormGroup;
-  public pswdControl: FormControl;
-  public pswdSecondControl: FormControl;
 
   constructor(private formBuilder: FormBuilder) {}
 
   public ngOnInit() {
-    this.nameControl = new FormControl('', [ Validators.required ]);
-    this.emailControl = new FormControl('', [ Validators.required, Validators.email ]);
-
     this.password = new FormGroup({
       pswdControl: new FormControl('', [
         Validators.minLength(6),
@@ -33,6 +27,12 @@ export class SignUpComponent implements OnInit {
     }, [
         matchPassword
     ]);
+
+    this.signUpForm = new FormGroup({
+      nameControl: new FormControl('', [Validators.required]),
+      emailControl: new FormControl('', [Validators.required, Validators.email]),
+      password: this.password
+    });
   }
 
   public getErrorMessage(errors: any): string {
