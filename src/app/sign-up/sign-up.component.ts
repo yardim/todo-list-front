@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { matchPassword } from './validations';
+import { User, TokenService } from '../services/token/token.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,7 +13,10 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public password: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private tokenService: TokenService
+  ) {}
 
   public ngOnInit() {
     this.password = new FormGroup({
@@ -33,6 +37,17 @@ export class SignUpComponent implements OnInit {
       emailControl: new FormControl('', [Validators.required, Validators.email]),
       password: this.password
     });
+  }
+
+  public onSubmit() {
+    const user: User = {
+      name: this.signUpForm.value.nameControl,
+      email: this.signUpForm.value.emailControl,
+      password: this.signUpForm.value.password.pswdControl
+    };
+
+    this.tokenService.createUser(user);
+    this.signUpForm.reset();
   }
 
   public getErrorMessage(errors: any): string {

@@ -24,7 +24,7 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary" [disabled]="signUpForm.invalid">
+  <button mat-raised-button color="primary" [disabled]="signUpForm.invalid" (click)="onSubmit()">
     Submit
   </button>
 </form>
