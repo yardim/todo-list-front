@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
     };
 
     this.tokenService.createUser(user);
-    this.signUpForm.reset();
+    // this.signUpForm.reset();
   }
 
   public getErrorMessage(errors: any): string {
