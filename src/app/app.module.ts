@@ -3,12 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { TokenService } from './services/token/token.service';
+import { UserService } from './services/user/user.service';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { TokenService } from './services/token/token.service';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
   ],
-  providers: [TokenService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

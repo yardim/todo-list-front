@@ -1,0 +1,8 @@
+export const BE_ROUTES = {
+  base: 'http://localhost:3000',
+  createUser: '/users/create'
+};
+
+export const STORAGE_KEYS = {
+  token: 'todo-token'
+};

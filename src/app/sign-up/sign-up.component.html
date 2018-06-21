@@ -24,7 +24,16 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary" [disabled]="signUpForm.invalid" (click)="onSubmit()">
-    Submit
-  </button>
+  <span class="btn-wrap">
+    <span class="spinner-wrap" *ngIf="isFormPending">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </span>
+    <button mat-raised-button color="primary" [disabled]="signUpForm.invalid || !!serverErrorMessage" (click)="onSubmit()">
+      Submit
+    </button>
+  </span>
+
+  <div *ngIf="serverErrorMessage" class="error-label">
+    {{serverErrorMessage}}
+  </div>
 </form>

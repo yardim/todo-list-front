@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { matchPassword } from './validations';
-import { User, TokenService } from '../services/token/token.service';
+import { UserService } from '../services/user/user.service';
+import { User } from '../entities/user';
+import { STORAGE_KEYS } from '../config/config';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
+// TODO: base component with unsubscribe logic to awoid memory leaks
 export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public password: FormGroup;
+  public serverErrorMessage: string;
+  public isFormPending: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private tokenService: TokenService
+    private tokenService: UserService
   ) {}
 
   public ngOnInit() {
@@ -37,6 +42,9 @@ export class SignUpComponent implements OnInit {
       emailControl: new FormControl('', [Validators.required, Validators.email]),
       password: this.password
     });
+
+    this.signUpForm.valueChanges
+      .subscribe(this.resetServerErrorMessage.bind(this));
   }
 
   public onSubmit() {
@@ -46,8 +54,22 @@ export class SignUpComponent implements OnInit {
       password: this.signUpForm.value.password.pswdControl
     };
 
-    this.tokenService.createUser(user);
-    // this.signUpForm.reset();
+    // TODO: handlers for enabling and disabling form
+    this.signUpForm.disable();
+    this.isFormPending = true;
+
+    this.tokenService.createUser(user)
+      .subscribe((data: any) => {
+        localStorage.setItem(STORAGE_KEYS.token, data.token);
+        this.isFormPending = false;
+        this.signUpForm.enable();
+        // TODO: redirect to another page instead of form reset
+        this.signUpForm.reset();
+      }, (errorResponse: HttpErrorResponse) => {
+        this.isFormPending = false;
+        this.signUpForm.enable();
+        this.getServerErrorMessage(errorResponse);
+      });
   }
 
   public getErrorMessage(errors: any): string {
@@ -70,5 +92,20 @@ export class SignUpComponent implements OnInit {
     if (errors.matchPassword) {
       return 'Passwords should match';
     }
+  }
+
+  private resetServerErrorMessage(): void {
+    if (this.serverErrorMessage) {
+      this.serverErrorMessage = '';
+    }
+  }
+
+  private getServerErrorMessage(errorResponse: HttpErrorResponse): void {
+    if (errorResponse.error.code === 11000) {
+      this.serverErrorMessage = 'User with this email is already exists';
+      return;
+    }
+
+    this.serverErrorMessage = errorResponse.error.message;
   }
 }
