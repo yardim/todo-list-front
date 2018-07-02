@@ -1,0 +1,11 @@
+<h2>Log in</h2>
+<form class="log-in-form" [formGroup]="logInForm">
+  <mat-form-field class="field-wrap">
+    <input matInput type="email" placeholder="Email" formControlName="emailControl">
+    <mat-error *ngIf="logInForm.controls.emailControl.invalid">Error message</mat-error>
+  </mat-form-field>
+  <mat-form-field class="field-wrap">
+    <input matInput type="password" placeholder="Password" formControlName="password">
+    <mat-error *ngIf="logInForm.controls.password.invalid">Error message</mat-error>
+  </mat-form-field>
+</form>

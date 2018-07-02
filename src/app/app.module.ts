@@ -10,11 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserService } from './services/user/user.service';
+import { LogInComponent } from './log-in/log-in.component';
+import { EnterViewComponent } from './enter-view/enter-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent
+    SignUpComponent,
+    LogInComponent,
+    EnterViewComponent,
   ],
   imports: [
     BrowserModule,

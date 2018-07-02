@@ -1,2 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/*
+TODO: read article about creation of custom components
+https://blog.angularindepth.com/never-again-be-confused-when-implementing-controlvalueaccessor-in-angular-forms-93b9eee9ee83
+*/
+
+.field-wrap {
+  width: 100%;
+  margin-bottom: 20px;
+}
