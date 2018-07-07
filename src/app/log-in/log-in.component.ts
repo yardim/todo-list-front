@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { STORAGE_KEYS } from 'src/app/config/config';
 
 
+// TODO: add base component to avoid code duplication
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',

@@ -7,6 +7,7 @@ import { User } from '../entities/user';
 import { STORAGE_KEYS } from '../config/config';
 import { HttpErrorResponse } from '@angular/common/http';
 
+// TODO: add base component to avoid code duplication
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
