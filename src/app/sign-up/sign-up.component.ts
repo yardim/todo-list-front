@@ -20,7 +20,7 @@ export class SignUpComponent implements OnInit {
   public isFormPending: boolean;
 
   constructor(
-    private tokenService: UserService
+    private userService: UserService
   ) {}
 
   public ngOnInit() {
@@ -58,7 +58,7 @@ export class SignUpComponent implements OnInit {
     this.signUpForm.disable();
     this.isFormPending = true;
 
-    this.tokenService.createUser(user)
+    this.userService.createUser(user)
       .subscribe((data: any) => {
         localStorage.setItem(STORAGE_KEYS.token, data.token);
         this.isFormPending = false;

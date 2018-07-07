@@ -4,8 +4,22 @@
     <input matInput type="email" placeholder="Email" formControlName="emailControl">
     <mat-error *ngIf="logInForm.controls.emailControl.invalid">Error message</mat-error>
   </mat-form-field>
+
   <mat-form-field class="field-wrap">
     <input matInput type="password" placeholder="Password" formControlName="password">
     <mat-error *ngIf="logInForm.controls.password.invalid">Error message</mat-error>
   </mat-form-field>
+
+  <div class="form-btn-wrap">
+    <span class="spinner-wrap" *ngIf="isFormPending">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </span>
+    <button mat-raised-button color="primary" [disabled]="logInForm.invalid || !!serverErrorMessage" (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
+
+  <div *ngIf="serverErrorMessage" class="server-error-message">
+    {{serverErrorMessage}}
+  </div>
 </form>

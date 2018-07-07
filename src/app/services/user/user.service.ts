@@ -13,4 +13,8 @@ export class UserService {
   public createUser(user: User): Observable<any> {
     return this.httpClient.post(`${BE_ROUTES.base}${BE_ROUTES.createUser}`, user);
   }
+
+  public logIn(user: User) {
+    return this.httpClient.post(`${BE_ROUTES.base}${BE_ROUTES.logIn}`, user);
+  }
 }
