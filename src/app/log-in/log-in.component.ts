@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/entities/user';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { STORAGE_KEYS } from 'src/app/config/config';
+import { Router } from '@angular/router';
 
 
 // TODO: add base component to avoid code duplication
@@ -18,7 +19,8 @@ export class LogInComponent implements OnInit {
   public serverErrorMessage: string;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.logInForm = new FormGroup({
       emailControl: new FormControl('', [Validators.required, Validators.email]),
@@ -46,7 +48,8 @@ export class LogInComponent implements OnInit {
           localStorage.setItem(STORAGE_KEYS.token, data.token);
           this.isFormPending = false;
           this.logInForm.enable();
-          this.logInForm.reset();
+          console.log('todos');
+          this.router.navigate(['/todos']);
         },
         (errorResponse: HttpErrorResponse) => {
           this.isFormPending = false;
