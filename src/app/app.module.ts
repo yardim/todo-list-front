@@ -16,6 +16,7 @@ import { EnterViewComponent } from './enter-view/enter-view.component';
 import { TodosComponent } from 'src/app/todos/todos.component';
 
 import { routes } from './routes';
+import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
 
 
 @NgModule({
@@ -40,7 +41,10 @@ import { routes } from './routes';
     MatProgressSpinnerModule,
     HttpClientModule,
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    AuthGuardService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

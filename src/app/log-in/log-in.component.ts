@@ -48,7 +48,6 @@ export class LogInComponent implements OnInit {
           localStorage.setItem(STORAGE_KEYS.token, data.token);
           this.isFormPending = false;
           this.logInForm.enable();
-          console.log('todos');
           this.router.navigate(['/todos']);
         },
         (errorResponse: HttpErrorResponse) => {

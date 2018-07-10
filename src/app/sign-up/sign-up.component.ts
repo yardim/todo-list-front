@@ -6,6 +6,7 @@ import { UserService } from '../services/user/user.service';
 import { User } from '../entities/user';
 import { STORAGE_KEYS } from '../config/config';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 // TODO: add base component to avoid code duplication
 @Component({
@@ -21,7 +22,8 @@ export class SignUpComponent implements OnInit {
   public isFormPending: boolean;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   public ngOnInit() {
@@ -64,8 +66,7 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem(STORAGE_KEYS.token, data.token);
         this.isFormPending = false;
         this.signUpForm.enable();
-        // TODO: redirect to another page instead of form reset
-        this.signUpForm.reset();
+        this.router.navigate(['/todos']);
       }, (errorResponse: HttpErrorResponse) => {
         this.isFormPending = false;
         this.signUpForm.enable();
