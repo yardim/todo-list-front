@@ -9,6 +9,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -19,6 +21,9 @@ import { TodosComponent } from 'src/app/todos/todos.component';
 
 import { routes } from './routes';
 import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
+
+import { todosReducer } from './store/todos.reducer';
+import { TodosEffects } from 'src/app/store/todos.effects';
 
 
 @NgModule({
@@ -42,8 +47,14 @@ import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    MatIconModule ,
+    MatIconModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      todos: todosReducer
+    }),
+    EffectsModule.forRoot([
+      TodosEffects
+    ])
   ],
   providers: [
     UserService,
