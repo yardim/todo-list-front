@@ -1,3 +1,64 @@
-<p>
-  todos works!
-</p>
+<mat-toolbar>
+  <div class="title">
+    Todo list
+  </div>
+  <div class="actions">
+    <button mat-stroked-button>Log out</button>
+  </div>
+</mat-toolbar>
+<main>
+  <div class="lists-column">
+    <h2 class="lists-title title">
+      <span class="text">
+        Lists
+      </span>
+      <span class="actions">
+        <button mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+      </span>
+    </h2>
+    <ul class="lists">
+      <li class="list">
+        <span class="name">
+          List name
+        </span>
+        <span class="actions">
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="todos-column">
+    <h2 class="todos-title title">
+      <span class="text">
+        Todos
+      </span>
+      <span class="actions">
+        <button mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+      </span>
+    </h2>
+    <ul class="todos">
+      <li class="todo">
+        <span class="content">
+          Todo content
+        </span>
+        <span class="actions">
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </span>
+      </li>
+    </ul>
+  </div>
+</main>

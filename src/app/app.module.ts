@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,6 +41,8 @@ import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatIconModule ,
     HttpClientModule,
   ],
   providers: [
