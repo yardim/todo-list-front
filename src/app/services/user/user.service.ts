@@ -1,20 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../entities/user';
-import { BE_ROUTES } from '../../config/config';
+import { BE_ROUTES, STORAGE_KEYS } from '../../config/config';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router
+  ) { }
 
-  public createUser(user: User): Observable<any> {
+  public createUser(user: User): Observable<Object> {
     return this.httpClient.post(`${BE_ROUTES.base}${BE_ROUTES.createUser}`, user);
   }
 
-  public logIn(user: User) {
+  public logIn(user: User): Observable<Object> {
     return this.httpClient.post(`${BE_ROUTES.base}${BE_ROUTES.logIn}`, user);
+  }
+
+  public setUserToStorage(userToken: string): void {
+    localStorage.setItem(STORAGE_KEYS.token, userToken);
+    this.router.navigate(['/todos']);
+  }
+
+  public removeUserFromStorage(): void {
+    localStorage.removeItem(STORAGE_KEYS.token);
+    this.router.navigate(['/enter']);
   }
 }

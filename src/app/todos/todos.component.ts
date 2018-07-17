@@ -1,8 +1,11 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { TodosState } from 'src/app/store/state';
+import { TodoListsState, TodoList } from 'src/app/store/state';
 import { BaseAction } from 'src/app/store/base-action';
 import { LOAD_TODOS } from 'src/app/store/todos.reducer';
+import { UserService } from 'src/app/services/user/user.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-todos',
@@ -10,14 +13,21 @@ import { LOAD_TODOS } from 'src/app/store/todos.reducer';
   styleUrls: ['./todos.component.css'],
 })
 export class TodosComponent implements OnInit {
-  constructor(private store: Store<TodosState>) { }
+  public todoLists$: Observable<TodoList[]>
+
+  constructor(
+    private store: Store<TodoListsState>,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
     this.store.dispatch(new BaseAction(LOAD_TODOS));
+    this.todoLists$ = this.store.select('todoLists').pipe(
+      map((state: any) => state.todoLists)
+    );
+  }
 
-    this.store.select('todos')
-      .subscribe(data => {
-        console.log(data);
-      })
+  logOut(): void {
+    this.userService.removeUserFromStorage();
   }
 }

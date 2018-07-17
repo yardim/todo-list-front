@@ -3,7 +3,7 @@
     Todo list
   </div>
   <div class="actions">
-    <button mat-stroked-button>Log out</button>
+    <button mat-stroked-button (click)="logOut()">Log out</button>
   </div>
 </mat-toolbar>
 <main>
@@ -19,9 +19,9 @@
       </span>
     </h2>
     <ul class="lists">
-      <li class="list">
+      <li class="list" *ngFor="let todoList of todoLists$ | async">
         <span class="name">
-          List name
+          {{todoList.name}}
         </span>
         <span class="actions">
           <button mat-icon-button>

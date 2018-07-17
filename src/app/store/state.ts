@@ -1,7 +1,12 @@
-export interface TodosState {
-  todoLists: any[];
+export interface TodoList {
+  id: string;
+  name: string;
 }
 
-export const initialState: TodosState = {
-  todoLists: []
+export interface TodoListsState {
+  todoLists: TodoList[];
+}
+
+export const initialTodoListsState: TodoListsState = {
+  todoLists: [],
 };

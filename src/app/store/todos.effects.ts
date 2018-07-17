@@ -25,8 +25,6 @@ export class TodosEffects {
         token: localStorage.getItem(STORAGE_KEYS.token)
       }).pipe(
         map(data => {
-          console.log(data);
-
           return {
             type: LOAD_TODOS_SUCCESS,
             payload: data

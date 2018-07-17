@@ -45,10 +45,9 @@ export class LogInComponent implements OnInit {
     this.userService.logIn(user)
       .subscribe(
         (data: any) => {
-          localStorage.setItem(STORAGE_KEYS.token, data.token);
           this.isFormPending = false;
           this.logInForm.enable();
-          this.router.navigate(['/todos']);
+          this.userService.setUserToStorage(data.token);
         },
         (errorResponse: HttpErrorResponse) => {
           this.isFormPending = false;

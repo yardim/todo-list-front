@@ -63,10 +63,9 @@ export class SignUpComponent implements OnInit {
 
     this.userService.createUser(user)
       .subscribe((data: any) => {
-        localStorage.setItem(STORAGE_KEYS.token, data.token);
         this.isFormPending = false;
         this.signUpForm.enable();
-        this.router.navigate(['/todos']);
+        this.userService.setUserToStorage(data.token);
       }, (errorResponse: HttpErrorResponse) => {
         this.isFormPending = false;
         this.signUpForm.enable();

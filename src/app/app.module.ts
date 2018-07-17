@@ -22,7 +22,7 @@ import { TodosComponent } from 'src/app/todos/todos.component';
 import { routes } from './routes';
 import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
 
-import { todosReducer } from './store/todos.reducer';
+import { todoListsReducer } from './store/todos.reducer';
 import { TodosEffects } from 'src/app/store/todos.effects';
 
 
@@ -50,7 +50,7 @@ import { TodosEffects } from 'src/app/store/todos.effects';
     MatIconModule,
     HttpClientModule,
     StoreModule.forRoot({
-      todos: todosReducer
+      todoLists: todoListsReducer
     }),
     EffectsModule.forRoot([
       TodosEffects
