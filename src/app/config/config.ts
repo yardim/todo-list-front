@@ -3,6 +3,7 @@ export const BE_ROUTES = {
   createUser: '/users/create',
   logIn: '/users/login',
   todos: '/todo-lists',
+  createList: '/todo-lists/create',
 };
 
 export const STORAGE_KEYS = {

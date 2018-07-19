@@ -9,6 +9,7 @@ main {
 }
 
 .lists-column {
+  min-width: 275px;
   padding: 0 20px 0 0;
   border-right: 1px solid #ccc;
 }
@@ -25,4 +26,8 @@ main {
 
 .title .text {
   line-height: 40px;
+}
+
+.list-field-form {
+  display: flex;
 }

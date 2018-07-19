@@ -1,25 +1,34 @@
 import { BaseAction } from './base-action';
-import { TodoListsState, initialTodoListsState } from './state';
+import { TodoAppState, initialTodoListsState, Todo } from './state';
 
-export const LOAD_TODOS: string = 'LOAD_TODOS';
-export const LOAD_TODOS_SUCCESS: string = 'LOAD_TODOS_SUCCESS';
-export const LOAD_TODOS_FAIL: string = 'LOAD_TODOS_FAIL';
+export const LOAD_STATE = 'LOAD_STATE';
+export const LOAD_STATE_SUCCESS = 'LOAD_STATE_SUCCESS';
+export const LOAD_STATE_FAIL = 'LOAD_STATE_FAIL';
 
-export function todoListsReducer(state: TodoListsState = initialTodoListsState, action: BaseAction): TodoListsState {
+export function todoListsReducer(state: TodoAppState = initialTodoListsState, action: BaseAction): TodoAppState {
   switch (action.type) {
-    case LOAD_TODOS:
-    case LOAD_TODOS_FAIL:
+    case LOAD_STATE:
+    case LOAD_STATE_FAIL:
       return state;
 
-    case LOAD_TODOS_SUCCESS:
-      const todoLists = action.payload.map(todoList => ({
+    case LOAD_STATE_SUCCESS:
+      const payload = action.payload;
+
+      const todoLists = payload.map(todoList => ({
         id: todoList.id,
         name: todoList.name
       }));
 
-      return {
-        todoLists
+      const todos = payload.reduce((allTodos: Todo[], currentTodos: Todo[]): Todo[] => (
+        allTodos.concat(currentTodos)
+      ), []);
+
+      const newState = {
+        todoLists,
+        todos
       };
+
+      return newState;
 
     default:
       return state;

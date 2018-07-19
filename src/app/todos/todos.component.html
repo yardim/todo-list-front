@@ -13,12 +13,25 @@
         Lists
       </span>
       <span class="actions">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="showListField()">
           <mat-icon>add</mat-icon>
         </button>
       </span>
     </h2>
     <ul class="lists">
+      <li *ngIf="isListFieldShown">
+        <form class="list-field-form" [formGroup]="listFieldForm" (submit)="addNewList()">
+          <mat-form-field class="field-wrap">
+            <input matInput type="text" placeholder="Enter list name" formControlName="listField">
+            <mat-error *ngIf="listFieldForm.controls.listField.invalid">{{addingListError}}</mat-error>
+          </mat-form-field>
+          <span class="actions">
+            <button mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+          </span>
+        </form>
+      </li>
       <li class="list" *ngFor="let todoList of todoLists$ | async">
         <span class="name">
           {{todoList.name}}

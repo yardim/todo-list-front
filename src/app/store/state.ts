@@ -3,10 +3,17 @@ export interface TodoList {
   name: string;
 }
 
-export interface TodoListsState {
-  todoLists: TodoList[];
+export interface Todo {
+  id: string;
+  name: string;
 }
 
-export const initialTodoListsState: TodoListsState = {
+export interface TodoAppState {
+  todoLists: TodoList[];
+  todos: Todo[];
+}
+
+export const initialTodoListsState: TodoAppState = {
   todoLists: [],
+  todos: []
 };

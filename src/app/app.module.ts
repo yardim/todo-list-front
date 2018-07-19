@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserService } from './services/user/user.service';
+import { TodoListsService } from './services/todo-lists/todo-lists.service';
 import { LogInComponent } from './log-in/log-in.component';
 import { EnterViewComponent } from './enter-view/enter-view.component';
 import { TodosComponent } from 'src/app/todos/todos.component';
@@ -58,7 +59,8 @@ import { TodosEffects } from 'src/app/store/todos.effects';
   ],
   providers: [
     UserService,
-    AuthGuardService
+    AuthGuardService,
+    TodoListsService,
   ],
   bootstrap: [AppComponent]
 })

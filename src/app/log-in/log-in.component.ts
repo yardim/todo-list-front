@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/entities/user';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
-import { STORAGE_KEYS } from 'src/app/config/config';
 import { Router } from '@angular/router';
 
 
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
+  // TODO: realise get error message method
   public logInForm: FormGroup;
   public isFormPending: boolean;
   public serverErrorMessage: string;
@@ -52,7 +52,7 @@ export class LogInComponent implements OnInit {
         (errorResponse: HttpErrorResponse) => {
           this.isFormPending = false;
           this.logInForm.enable();
-          this.serverErrorMessage = errorResponse.error.errorMessage
+          this.serverErrorMessage = errorResponse.error.errorMessage;
         }
       );
   }
