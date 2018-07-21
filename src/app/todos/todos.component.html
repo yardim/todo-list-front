@@ -21,6 +21,9 @@
     <ul class="lists">
       <li *ngIf="isListFieldShown">
         <form class="list-field-form" [formGroup]="listFieldForm" (submit)="addNewList()">
+          <span class="spinner-wrap" *ngIf="listFieldForm.disabled">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </span>
           <mat-form-field class="field-wrap">
             <input matInput type="text" placeholder="Enter list name" formControlName="listField">
             <mat-error *ngIf="listFieldForm.controls.listField.invalid">{{addingListError}}</mat-error>
@@ -74,4 +77,5 @@
       </li>
     </ul>
   </div>
+  <div class="operations-overlay" *ngIf="isListFieldShown" (click)="hideListField()"></div>
 </main>

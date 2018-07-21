@@ -30,15 +30,17 @@ export class TodosComponent implements OnInit {
     this.store.dispatch(new BaseAction(LOAD_STATE));
     this.todoLists$ = this.store.pipe(
       select('todoLists'),
-      map((state: TodoAppState): TodoList[] => state.todoLists)
+      map((state: TodoAppState): TodoList[] => {
+        // TODO: move this logic into todos service
+        this.hideListField();
+        this.listFieldForm.enable();
+        return state.todoLists
+      })
     );
 
     this.listFieldForm = new FormGroup({
       listField: new FormControl('', Validators.required)
     });
-
-    this.listFieldForm.valueChanges
-      .subscribe(() => this.addingListError = 'Field is required');
   }
 
   logOut(): void {
@@ -46,20 +48,19 @@ export class TodosComponent implements OnInit {
   }
 
   showListField() {
-    this.isListFieldShown = !this.isListFieldShown;
+    this.isListFieldShown = true;
     this.listFieldForm.reset();
+  }
+
+  hideListField() {
+    this.isListFieldShown = false;
   }
 
   addNewList() {
     const newListName = this.listFieldForm.value.listField;
-    this.todoListsService.createNewTodoList(newListName)
-      .subscribe(
-        data => {
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    if (!newListName) return;
+
+    this.listFieldForm.disable();
+    this.todoListsService.createNewTodoList(newListName);
   }
 }

@@ -6,6 +6,16 @@ mat-toolbar {
 
 main {
   display: flex;
+  position: relative;
+}
+
+.operations-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .lists-column {
@@ -30,4 +40,6 @@ main {
 
 .list-field-form {
   display: flex;
+  position: relative;
+  z-index: 1;
 }

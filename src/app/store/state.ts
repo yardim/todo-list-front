@@ -1,6 +1,7 @@
 export interface TodoList {
   id: string;
   name: string;
+  todos?: Todo[]
 }
 
 export interface Todo {
