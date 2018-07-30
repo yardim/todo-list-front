@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { BaseAction } from './base-action';
-import { LOAD_STATE, LOAD_STATE_SUCCESS, CREATE_TODO_LIST, CREATE_TODO_LIST_SUCCESS, CREATE_TODO_LIST_FAIL } from 'src/app/store/todos.reducer';
+import { LOAD_STATE, LOAD_STATE_SUCCESS, CREATE_TODO_LIST, CREATE_TODO_LIST_SUCCESS, CREATE_TODO_LIST_FAIL, REMOVE_TODO_LIST, REMOVE_TODO_LIST_SUCCESS, REMOVE_TODO_LIST_FAIL } from 'src/app/store/todos.reducer';
 import { BE_ROUTES, STORAGE_KEYS } from 'src/app/config/config';
 import { catchError } from 'rxjs/internal/operators/catchError';
 
@@ -48,5 +48,20 @@ export class TodosEffects {
         )
       );
     })
+  )
+
+  @Effect()
+  public removeTodoList$: Observable<BaseAction> = this.actions$.pipe(
+    ofType(REMOVE_TODO_LIST),
+    mergeMap((action: BaseAction) => {
+      const url = `${BE_ROUTES.base}${BE_ROUTES.deleteList}`;
+      const name = action.payload.name;
+
+      return this.http.post(`${url}${name}`, { token: action.payload.token });
+    }),
+    map(data => {
+      return new BaseAction(REMOVE_TODO_LIST_SUCCESS, data)
+    }),
+    catchError(() => of(new BaseAction(REMOVE_TODO_LIST_FAIL)))
   )
 }

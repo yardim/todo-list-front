@@ -25,6 +25,7 @@ import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
 
 import { todoListsReducer } from './store/todos.reducer';
 import { TodosEffects } from 'src/app/store/todos.effects';
+import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { TodosEffects } from 'src/app/store/todos.effects';
     LogInComponent,
     EnterViewComponent,
     TodosComponent,
+    TodoListItemComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -36,17 +36,7 @@
         </form>
       </li>
       <li class="list" *ngFor="let todoList of todoLists$ | async">
-        <span class="name">
-          {{todoList.name}}
-        </span>
-        <span class="actions">
-          <button mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>clear</mat-icon>
-          </button>
-        </span>
+        <app-todo-list-item [todoList]="todoList"></app-todo-list-item>
       </li>
     </ul>
   </div>

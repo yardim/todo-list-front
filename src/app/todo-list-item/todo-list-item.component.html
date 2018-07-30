@@ -1,0 +1,14 @@
+<span class="spinner-wrap" *ngIf="isProcessing">
+  <mat-spinner [diameter]="20"></mat-spinner>
+</span>
+<span class="name">
+  {{todoList.name}}
+</span>
+<span class="actions">
+  <button mat-icon-button>
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button (click)="removeTodoList(todoList.name)">
+    <mat-icon>clear</mat-icon>
+  </button>
+</span>
