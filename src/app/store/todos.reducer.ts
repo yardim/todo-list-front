@@ -43,11 +43,17 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
       return newState;
 
     case CREATE_TODO_LIST_SUCCESS:
+      const id = action.payload._id;
+      delete action.payload._id;
+
       return {
         ...state,
         todoLists: [
           ...state.todoLists,
-          action.payload
+          {
+            ...action.payload,
+            id
+          }
         ]
       };
 

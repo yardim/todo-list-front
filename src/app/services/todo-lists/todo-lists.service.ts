@@ -19,7 +19,6 @@ export class TodoListsService {
 
   createNewTodoList(name: string): void {
     // TODO: create interceptor to add token to http requests
-    console.log('createNewTodoList', name);
     const token = localStorage.getItem(STORAGE_KEYS.token);
 
     // TODO: move current logic to effects
