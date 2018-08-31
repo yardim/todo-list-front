@@ -18,15 +18,11 @@ export class TodoListsService {
   ) { }
 
   createNewTodoList(name: string): void {
-    // TODO: create interceptor to add token to http requests
-    const token = localStorage.getItem(STORAGE_KEYS.token);
-
-    // TODO: move current logic to effects
-    this.store.dispatch(new BaseAction(CREATE_TODO_LIST, { name, token }));
+    this.store.dispatch(new BaseAction(CREATE_TODO_LIST, { name }));
   }
 
-  removeTodoList(name: string): void {
+  removeTodoList(id: string): void {
     const token = localStorage.getItem(STORAGE_KEYS.token);
-    this.store.dispatch(new BaseAction(REMOVE_TODO_LIST, { name, token }));
+    this.store.dispatch(new BaseAction(REMOVE_TODO_LIST, { id, token }));
   }
 }

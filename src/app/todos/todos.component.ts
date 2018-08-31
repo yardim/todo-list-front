@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { TodoAppState, TodoList } from 'src/app/store/state';
 import { BaseAction } from 'src/app/store/base-action';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoListsService } from '../services/todo-lists/todo-lists.service';
+import { STORAGE_KEYS } from 'src/app/config/config';
 
 @Component({
   selector: 'app-todos',
@@ -19,6 +20,7 @@ export class TodosComponent implements OnInit {
   public listFieldForm: FormGroup;
   public isListFieldShown = false;
   public addingListError = 'Field is required';
+  public userName = '';
   @ViewChild('listFieldEl')
   public listFieldEl: ElementRef;
 
@@ -27,10 +29,10 @@ export class TodosComponent implements OnInit {
     private userService: UserService,
     private todoListsService: TodoListsService,
     private renderer: Renderer,
-    private zone: NgZone,
   ) { }
 
   ngOnInit() {
+    this.userName = localStorage.getItem(STORAGE_KEYS.user);
     this.store.dispatch(new BaseAction(LOAD_STATE));
     this.todoLists$ = this.store.pipe(
       select('todoLists'),

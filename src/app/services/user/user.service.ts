@@ -22,8 +22,9 @@ export class UserService {
     return this.httpClient.post(`${BE_ROUTES.base}${BE_ROUTES.logIn}`, user);
   }
 
-  public setUserToStorage(userToken: string): void {
-    localStorage.setItem(STORAGE_KEYS.token, userToken);
+  public setUserToStorage(user: any): void {
+    localStorage.setItem(STORAGE_KEYS.token, user.token);
+    localStorage.setItem(STORAGE_KEYS.user, user.name);
     this.router.navigate(['/todos']);
   }
 

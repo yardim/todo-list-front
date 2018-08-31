@@ -43,3 +43,8 @@ main {
   position: relative;
   z-index: 1;
 }
+
+.greetings {
+  font-size: 14px;
+  padding: 30px;
+}

@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,6 +26,7 @@ import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
 import { todoListsReducer } from './store/todos.reducer';
 import { TodosEffects } from 'src/app/store/todos.effects';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
+import { TokenInterceptor } from './services/interceptors/token.interceptor';
 
 
 @NgModule({
@@ -63,6 +64,11 @@ import { TodoListItemComponent } from './todo-list-item/todo-list-item.component
     UserService,
     AuthGuardService,
     TodoListsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

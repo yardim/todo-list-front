@@ -7,7 +7,7 @@ export const LOAD_STATE_FAIL = 'LOAD_STATE_FAIL';
 
 export const CREATE_TODO_LIST = 'CREATE_TODO_LIST';
 export const CREATE_TODO_LIST_SUCCESS = 'CREATE_TODO_LIST_SUCCESS';
-export const CREATE_TODO_LIST_FAIL = 'CREATE_TODO_LIST_SUCCESS';
+export const CREATE_TODO_LIST_FAIL = 'CREATE_TODO_LIST_FAIL';
 
 export const REMOVE_TODO_LIST = 'REMOVE_TODO_LIST';
 export const REMOVE_TODO_LIST_SUCCESS = 'REMOVE_TODO_LIST_SUCCESS';
@@ -68,6 +68,9 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
           ...state.todoLists.slice(indexRemoved + 1)
         ]
       };
+
+    case CREATE_TODO_LIST_FAIL:
+      return { ...state };
 
     default:
       return state;

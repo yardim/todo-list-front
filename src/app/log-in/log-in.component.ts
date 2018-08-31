@@ -47,7 +47,7 @@ export class LogInComponent implements OnInit {
         (data: any) => {
           this.isFormPending = false;
           this.logInForm.enable();
-          this.userService.setUserToStorage(data.token);
+          this.userService.setUserToStorage(data);
         },
         (errorResponse: HttpErrorResponse) => {
           this.isFormPending = false;

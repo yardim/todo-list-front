@@ -8,5 +8,6 @@ export const BE_ROUTES = {
 };
 
 export const STORAGE_KEYS = {
-  token: 'todo-token'
+  token: 'todo-token',
+  user: 'user',
 };

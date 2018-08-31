@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { BaseAction } from './base-action';
-import { LOAD_STATE, LOAD_STATE_SUCCESS, CREATE_TODO_LIST, CREATE_TODO_LIST_SUCCESS, CREATE_TODO_LIST_FAIL, REMOVE_TODO_LIST, REMOVE_TODO_LIST_SUCCESS, REMOVE_TODO_LIST_FAIL } from 'src/app/store/todos.reducer';
+import {
+  LOAD_STATE,
+  LOAD_STATE_SUCCESS,
+  CREATE_TODO_LIST,
+  CREATE_TODO_LIST_SUCCESS,
+  CREATE_TODO_LIST_FAIL,
+  REMOVE_TODO_LIST,
+  REMOVE_TODO_LIST_SUCCESS,
+  REMOVE_TODO_LIST_FAIL
+} from 'src/app/store/todos.reducer';
 import { BE_ROUTES, STORAGE_KEYS } from 'src/app/config/config';
 import { catchError } from 'rxjs/internal/operators/catchError';
 
@@ -21,9 +30,8 @@ export class TodosEffects {
     ofType(LOAD_STATE),
     mergeMap(action => {
       const url = `${BE_ROUTES.base}${BE_ROUTES.todos}`;
-      const token = localStorage.getItem(STORAGE_KEYS.token);
 
-      return this.http.post(url, { token }).pipe(
+      return this.http.get(url).pipe(
         map(data => ({
           type: LOAD_STATE_SUCCESS,
           payload: data
@@ -44,7 +52,10 @@ export class TodosEffects {
           return new BaseAction(CREATE_TODO_LIST_SUCCESS, data);
         }),
         catchError(
-          () => of(new BaseAction(CREATE_TODO_LIST_FAIL))
+          (err) => {
+            console.error(err);
+            return of(new BaseAction(CREATE_TODO_LIST_FAIL))
+          }
         )
       );
     })
@@ -55,9 +66,9 @@ export class TodosEffects {
     ofType(REMOVE_TODO_LIST),
     mergeMap((action: BaseAction) => {
       const url = `${BE_ROUTES.base}${BE_ROUTES.deleteList}`;
-      const name = action.payload.name;
+      const id = action.payload.id;
 
-      return this.http.post(`${url}${name}`, { token: action.payload.token });
+      return this.http.delete(`${url}${id}`);
     }),
     map(data => {
       return new BaseAction(REMOVE_TODO_LIST_SUCCESS, data)
