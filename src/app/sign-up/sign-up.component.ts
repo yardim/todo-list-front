@@ -21,10 +21,7 @@ export class SignUpComponent implements OnInit {
   public serverErrorMessage: string;
   public isFormPending: boolean;
 
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) {}
+  constructor(private userService: UserService) {}
 
   public ngOnInit() {
     this.password = new FormGroup({

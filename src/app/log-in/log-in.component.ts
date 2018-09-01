@@ -18,10 +18,7 @@ export class LogInComponent implements OnInit {
   public isFormPending: boolean;
   public serverErrorMessage: string;
 
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) {
+  constructor(private userService: UserService) {
     this.logInForm = new FormGroup({
       emailControl: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
