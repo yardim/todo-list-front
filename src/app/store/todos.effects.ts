@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { BaseAction } from './base-action';
 import {
@@ -13,7 +14,8 @@ import {
   CREATE_TODO_LIST_FAIL,
   REMOVE_TODO_LIST,
   REMOVE_TODO_LIST_SUCCESS,
-  REMOVE_TODO_LIST_FAIL
+  REMOVE_TODO_LIST_FAIL,
+  LOAD_STATE_FAIL
 } from 'src/app/store/todos.reducer';
 import { BE_ROUTES, STORAGE_KEYS } from 'src/app/config/config';
 import { catchError } from 'rxjs/internal/operators/catchError';
@@ -22,7 +24,8 @@ import { catchError } from 'rxjs/internal/operators/catchError';
 export class TodosEffects {
   constructor(
     private http: HttpClient,
-    private actions$: Actions
+    private actions$: Actions,
+    private router: Router
   ) { }
 
   @Effect()
@@ -35,7 +38,12 @@ export class TodosEffects {
         map(data => ({
           type: LOAD_STATE_SUCCESS,
           payload: data
-        }))
+        })),
+        catchError(err => {
+          console.log(err);
+          this.router.navigateByUrl('/enter');
+          return of(new BaseAction(LOAD_STATE_FAIL));
+        })
       )
     })
   );
