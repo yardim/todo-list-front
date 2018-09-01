@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../../entities/user';
-import { BE_ROUTES, STORAGE_KEYS } from '../../config/config';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { User } from '../../entities/user';
+import { BE_ROUTES, STORAGE_KEYS } from '../../config/config';
+import { TodoAppState } from '../../store/state';
+import { CLEAR_STATE } from '../../store/todos.reducer';
+import { BaseAction } from '../../store/base-action';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +16,8 @@ import { Router } from '@angular/router';
 export class UserService {
   constructor(
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store<TodoAppState>
   ) { }
 
   public createUser(user: User): Observable<Object> {
@@ -31,5 +37,6 @@ export class UserService {
   public removeUserFromStorage(): void {
     localStorage.removeItem(STORAGE_KEYS.token);
     this.router.navigate(['/enter']);
+    this.store.dispatch(new BaseAction(CLEAR_STATE))
   }
 }

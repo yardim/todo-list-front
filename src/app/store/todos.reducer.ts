@@ -13,6 +13,8 @@ export const REMOVE_TODO_LIST = 'REMOVE_TODO_LIST';
 export const REMOVE_TODO_LIST_SUCCESS = 'REMOVE_TODO_LIST_SUCCESS';
 export const REMOVE_TODO_LIST_FAIL = 'REMOVE_TODO_LIST_FAIL';
 
+export const CLEAR_STATE = 'CLEAR_STATE';
+
 export function todoListsReducer(state: TodoAppState = initialTodoListsState, action: BaseAction): TodoAppState {
   switch (action.type) {
     case LOAD_STATE:
@@ -20,6 +22,9 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
     case REMOVE_TODO_LIST:
     case REMOVE_TODO_LIST_FAIL:
       return state;
+
+    case CLEAR_STATE:
+      return initialTodoListsState;
 
     case LOAD_STATE_SUCCESS:
       const payload = action.payload;
