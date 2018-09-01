@@ -1,5 +1,5 @@
-<span class="spinner-wrap" *ngIf="isProcessing">
-  <mat-spinner [diameter]="20"></mat-spinner>
+<span class="spinner-wrap">
+  <mat-spinner [diameter]="20" *ngIf="isProcessing"></mat-spinner>
 </span>
 <span class="name">
   {{todoList.name}}

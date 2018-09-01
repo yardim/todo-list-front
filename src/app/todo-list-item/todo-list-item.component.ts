@@ -18,7 +18,7 @@ export class TodoListItemComponent implements OnInit {
   ngOnInit() {}
 
   removeTodoList(id: string): void {
-    // TODO: add progress indicator
+    this.isProcessing = true;
     this.todoListsServise.removeTodoList(id);
   }
 }

@@ -24,6 +24,10 @@ main {
   border-right: 1px solid #ccc;
 }
 
+.lists {
+  padding: 0;
+}
+
 .todos-column {
   flex-grow: 1;
   padding-left: 20px;
@@ -39,9 +43,21 @@ main {
 }
 
 .list-field-form {
+  padding-left: 25px;
   display: flex;
   position: relative;
   z-index: 1;
+}
+
+.field-wrap {
+  margin: 0;
+}
+
+.spinner-wrap {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
 }
 
 .greetings {
