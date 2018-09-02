@@ -1,11 +1,21 @@
-<span class="spinner-wrap">
-  <mat-spinner [diameter]="20" *ngIf="isProcessing"></mat-spinner>
+<span  *ngIf="isProcessing" class="spinner-wrap">
+  <mat-spinner [diameter]="20"></mat-spinner>
 </span>
-<span class="name">
+<span *ngIf="!isEditMode" class="name">
   {{todoList.name}}
 </span>
+<span *ngIf="isEditMode" class="edit-input-wrap">
+  <form (submit)="onEditSubmit(todoList.id)" [formGroup]="listNameForm">
+    <input
+      formControlName="listNameInput"
+      type="text"
+      class="edit-input"
+      appAutofocus
+    >
+  </form>
+</span>
 <span class="actions">
-  <button mat-icon-button>
+  <button mat-icon-button (click)="onEdit(todoList.id)">
     <mat-icon>edit</mat-icon>
   </button>
   <button mat-icon-button (click)="removeTodoList(todoList.id)">

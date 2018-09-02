@@ -1,7 +1,21 @@
 :host {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   padding-left: 25px;
+  transition: background-color 0.3s;
+}
+
+:host:hover {
+  background: #eee;
+}
+
+.edit-input-wrap {
+  flex-grow: 1;
+}
+
+.name {
+  flex-grow: 1;
 }
 
 .spinner-wrap {

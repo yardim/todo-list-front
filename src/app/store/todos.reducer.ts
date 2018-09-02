@@ -13,9 +13,15 @@ export const REMOVE_TODO_LIST = 'REMOVE_TODO_LIST';
 export const REMOVE_TODO_LIST_SUCCESS = 'REMOVE_TODO_LIST_SUCCESS';
 export const REMOVE_TODO_LIST_FAIL = 'REMOVE_TODO_LIST_FAIL';
 
+export const EDIT_TODO_LIST_NAME = 'EDIT_TODO_LIST_NAME';
+export const EDIT_TODO_LIST_NAME_SUCCESS = 'EDIT_TODO_LIST_NAME_SUCCESS';
+export const EDIT_TODO_LIST_NAME_FAIL = 'EDIT_TODO_LIST_NAME_FAIL';
+
 export const CLEAR_STATE = 'CLEAR_STATE';
 
 export function todoListsReducer(state: TodoAppState = initialTodoListsState, action: BaseAction): TodoAppState {
+  let payload;
+
   switch (action.type) {
     case LOAD_STATE:
     case LOAD_STATE_FAIL:
@@ -27,7 +33,7 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
       return initialTodoListsState;
 
     case LOAD_STATE_SUCCESS:
-      const payload = action.payload;
+      payload = action.payload;
 
       const todoLists = payload.map(todoList => {
         return {
@@ -74,8 +80,27 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
         ]
       };
 
+    case EDIT_TODO_LIST_NAME_SUCCESS:
+      const index = state.todoLists
+        .findIndex((todoList: TodoList, index: number, lists: TodoList[]) => {
+          return action.payload._id === todoList.id;
+        });
+
+      return {
+        ...state,
+        todoLists: [
+          ...state.todoLists.slice(0, index),
+          {
+            ...state.todoLists[index],
+            name: action.payload.name
+          },
+          ...state.todoLists.slice(index + 1)
+        ]
+      }
+
     case CREATE_TODO_LIST_FAIL:
-      return { ...state };
+    case EDIT_TODO_LIST_NAME_FAIL:
+      return { ...state }
 
     default:
       return state;

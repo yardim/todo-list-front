@@ -27,6 +27,7 @@ import { todoListsReducer } from './store/todos.reducer';
 import { TodosEffects } from 'src/app/store/todos.effects';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
+import { AutofocusDirective } from './directives/autofocus.directive';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { TokenInterceptor } from './services/interceptors/token.interceptor';
     EnterViewComponent,
     TodosComponent,
     TodoListItemComponent,
+    AutofocusDirective,
   ],
   imports: [
     RouterModule.forRoot(

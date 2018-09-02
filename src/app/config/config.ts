@@ -5,6 +5,7 @@ export const BE_ROUTES = {
   todos: '/todo-lists',
   createList: '/todo-lists/create',
   deleteList: '/todo-lists/delete/',
+  updateList: '/todo-lists/update/',
 };
 
 export const STORAGE_KEYS = {

@@ -15,10 +15,14 @@ import {
   REMOVE_TODO_LIST,
   REMOVE_TODO_LIST_SUCCESS,
   REMOVE_TODO_LIST_FAIL,
-  LOAD_STATE_FAIL
+  LOAD_STATE_FAIL,
+  EDIT_TODO_LIST_NAME,
+  EDIT_TODO_LIST_NAME_SUCCESS,
+  EDIT_TODO_LIST_NAME_FAIL
 } from 'src/app/store/todos.reducer';
 import { BE_ROUTES, STORAGE_KEYS } from 'src/app/config/config';
 import { catchError } from 'rxjs/internal/operators/catchError';
+import { switchMap } from 'rxjs/internal/operators/switchMap';
 
 @Injectable()
 export class TodosEffects {
@@ -82,5 +86,22 @@ export class TodosEffects {
       return new BaseAction(REMOVE_TODO_LIST_SUCCESS, data)
     }),
     catchError(() => of(new BaseAction(REMOVE_TODO_LIST_FAIL)))
+  )
+
+  @Effect()
+  public editTodoListName$: Observable<BaseAction> = this.actions$.pipe(
+    ofType(EDIT_TODO_LIST_NAME),
+    mergeMap((action: BaseAction) => {
+      const url = `${BE_ROUTES.base}${BE_ROUTES.updateList}`;
+      const id = action.payload.id;
+
+      return this.http.put(`${url}${id}`, {
+        name: action.payload.name
+      });
+    }),
+    map(data => {
+      return new BaseAction(EDIT_TODO_LIST_NAME_SUCCESS, data)
+    }),
+    catchError(() => of(new BaseAction(EDIT_TODO_LIST_NAME_FAIL)))
   )
 }
