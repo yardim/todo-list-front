@@ -1,0 +1,15 @@
+<ul class="todos">
+  <li class="todo" *ngFor="let todo of todos$ | async">
+    <span class="content">
+      {{ todo.value }}
+    </span>
+    <span class="actions">
+      <button mat-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </span>
+  </li>
+</ul>

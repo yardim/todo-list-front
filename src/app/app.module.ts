@@ -28,6 +28,8 @@ import { TodosEffects } from 'src/app/store/todos.effects';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { TodosListComponent } from './todos-list/todos-list.component';
+import { ItemAddingFormComponent } from './item-adding-form/item-adding-form.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     TodosComponent,
     TodoListItemComponent,
     AutofocusDirective,
+    TodosListComponent,
+    ItemAddingFormComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -56,7 +60,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     MatIconModule,
     HttpClientModule,
     StoreModule.forRoot({
-      todoLists: todoListsReducer
+      todoLists: todoListsReducer,
+      todos: todoListsReducer
     }),
     EffectsModule.forRoot([
       TodosEffects

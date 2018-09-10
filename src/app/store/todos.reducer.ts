@@ -23,15 +23,6 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
   let payload;
 
   switch (action.type) {
-    case LOAD_STATE:
-    case LOAD_STATE_FAIL:
-    case REMOVE_TODO_LIST:
-    case REMOVE_TODO_LIST_FAIL:
-      return state;
-
-    case CLEAR_STATE:
-      return initialTodoListsState;
-
     case LOAD_STATE_SUCCESS:
       payload = action.payload;
 
@@ -39,11 +30,11 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
         return {
           id: todoList.id,
           name: todoList.name
-        }
+        };
       });
 
       const todos = payload.reduce((currentTodos: Todo[], todoList: TodoList): Todo[] => {
-        return todoList.todos.concat(currentTodos)
+        return todoList.todos.concat(currentTodos);
       }, []);
 
       const newState = {
@@ -82,7 +73,7 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
 
     case EDIT_TODO_LIST_NAME_SUCCESS:
       const index = state.todoLists
-        .findIndex((todoList: TodoList, index: number, lists: TodoList[]) => {
+        .findIndex((todoList: TodoList) => {
           return action.payload._id === todoList.id;
         });
 
@@ -96,11 +87,20 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
           },
           ...state.todoLists.slice(index + 1)
         ]
-      }
+      };
 
-    case CREATE_TODO_LIST_FAIL:
+    case LOAD_STATE:
+    case LOAD_STATE_FAIL:
+    case REMOVE_TODO_LIST:
+    case REMOVE_TODO_LIST_FAIL:
+      return state;
+
+      case CLEAR_STATE:
+      return initialTodoListsState;
+
+      case CREATE_TODO_LIST_FAIL:
     case EDIT_TODO_LIST_NAME_FAIL:
-      return { ...state }
+      return { ...state };
 
     default:
       return state;

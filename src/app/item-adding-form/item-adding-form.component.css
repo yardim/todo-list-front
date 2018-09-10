@@ -1,0 +1,17 @@
+.adding-item-form {
+  padding-left: 25px;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.field-wrap {
+  margin: 0;
+}
+
+.spinner-wrap {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+}

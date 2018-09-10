@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { TodoAppState, TodoList } from 'src/app/store/state';
 import { BaseAction } from 'src/app/store/base-action';
@@ -19,16 +19,12 @@ export class TodosComponent implements OnInit {
   public todoLists$: Observable<TodoList[]>;
   public listFieldForm: FormGroup;
   public isListFieldShown = false;
-  public addingListError = 'Field is required';
   public userName = '';
-  @ViewChild('listFieldEl')
-  public listFieldEl: ElementRef;
 
   constructor(
     private store: Store<TodoAppState>,
     private userService: UserService,
     private todoListsService: TodoListsService,
-    private renderer: Renderer,
   ) { }
 
   ngOnInit() {
@@ -40,7 +36,7 @@ export class TodosComponent implements OnInit {
         // TODO: move this logic into todos service
         this.hideListField();
         this.listFieldForm.enable();
-        return state.todoLists
+        return state.todoLists;
       })
     );
 
@@ -56,21 +52,13 @@ export class TodosComponent implements OnInit {
   showListField() {
     this.isListFieldShown = true;
     this.listFieldForm.reset();
-    // TODO: find normal method to perform some code after DOM rerender
-    // https://blog.thoughtram.io/angular/2016/02/01/zones-in-angular-2.html
-    setTimeout(() => {
-      this.renderer.invokeElementMethod(this.listFieldEl.nativeElement, 'focus')
-    });
   }
 
   hideListField() {
     this.isListFieldShown = false;
   }
 
-  addNewList() {
-    const newListName = this.listFieldForm.value.listField;
-    if (!newListName) return;
-
+  addNewList(newListName: string) {
     this.listFieldForm.disable();
     this.todoListsService.createNewTodoList(newListName);
   }

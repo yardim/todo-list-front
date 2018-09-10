@@ -1,12 +1,12 @@
 export interface TodoList {
   id: string;
   name: string;
-  todos?: Todo[]
+  todos?: Todo[];
 }
 
 export interface Todo {
-  id: string;
   name: string;
+  isDone: boolean;
 }
 
 export interface TodoAppState {
