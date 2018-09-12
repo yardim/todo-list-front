@@ -4,9 +4,8 @@ import { TodoAppState, TodoList } from 'src/app/store/state';
 import { BaseAction } from 'src/app/store/base-action';
 import { LOAD_STATE } from 'src/app/store/todos.reducer';
 import { UserService } from 'src/app/services/user/user.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoListsService } from '../services/todo-lists/todo-lists.service';
 import { STORAGE_KEYS } from 'src/app/config/config';
 
@@ -17,9 +16,12 @@ import { STORAGE_KEYS } from 'src/app/config/config';
 })
 export class TodosComponent implements OnInit {
   public todoLists$: Observable<TodoList[]>;
-  public listFieldForm: FormGroup;
   public isListFieldShown = false;
+  public isTodoFieldShown = false;
   public userName = '';
+  public formSwitcher: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  public formCleaner: Subject<void> = new Subject();
+  public selectedList: string;
 
   constructor(
     private store: Store<TodoAppState>,
@@ -29,20 +31,24 @@ export class TodosComponent implements OnInit {
 
   ngOnInit() {
     this.userName = localStorage.getItem(STORAGE_KEYS.user);
+
     this.store.dispatch(new BaseAction(LOAD_STATE));
+
     this.todoLists$ = this.store.pipe(
       select('todoLists'),
       map((state: TodoAppState): TodoList[] => {
         // TODO: move this logic into todos service
-        this.hideListField();
-        this.listFieldForm.enable();
-        return state.todoLists;
-      })
-    );
+        this.hideForms();
+        this.formSwitcher.next(true);
 
-    this.listFieldForm = new FormGroup({
-      listField: new FormControl('', Validators.required)
-    });
+        if (state.todoLists.length) {
+          console.log(state.todoLists[0].id);
+          // this.selectList(state.todoLists[0].id);
+        }
+
+        return state.todoLists;
+      }),
+    );
   }
 
   logOut(): void {
@@ -51,15 +57,25 @@ export class TodosComponent implements OnInit {
 
   showListField() {
     this.isListFieldShown = true;
-    this.listFieldForm.reset();
+    this.formCleaner.next();
   }
 
-  hideListField() {
+  hideForms() {
     this.isListFieldShown = false;
+    this.isTodoFieldShown = false;
   }
 
   addNewList(newListName: string) {
-    this.listFieldForm.disable();
+    this.formSwitcher.next(false);
     this.todoListsService.createNewTodoList(newListName);
+  }
+
+  showTodoForm() {
+    this.isTodoFieldShown = true;
+  }
+
+  selectList(listID: string) {
+    this.selectedList = listID;
+    this.todoListsService.selectList();
   }
 }

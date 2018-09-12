@@ -21,24 +21,18 @@
     </h2>
     <ul class="lists">
       <li *ngIf="isListFieldShown">
-        <!-- TODO: add disbling form on submit -->
-        <app-item-adding-form (addNewItem)="addNewList($event)"></app-item-adding-form>
-        <!-- <form class="list-field-form" [formGroup]="listFieldForm" (submit)="addNewList()">
-          <span class="spinner-wrap" *ngIf="listFieldForm.disabled">
-            <mat-spinner [diameter]="20"></mat-spinner>
-          </span>
-          <mat-form-field class="field-wrap">
-            <input matInput type="text" #listFieldEl placeholder="Enter list name" formControlName="listField">
-            <mat-error *ngIf="listFieldForm.controls.listField.invalid">{{addingListError}}</mat-error>
-          </mat-form-field>
-          <span class="actions">
-            <button mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-          </span>
-        </form> -->
+        <app-item-adding-form
+          (addNewItem)="addNewList($event)"
+          [statusSwitcher]="formSwitcher"
+          [cleaner]="formCleaner">
+        </app-item-adding-form>
       </li>
-      <li class="list" *ngFor="let todoList of todoLists$ | async">
+      <li
+        class="list"
+        *ngFor="let todoList of todoLists$ | async"
+        (click)="selectList(todoList.id)"
+        [ngClass]="{active: selectedList === todoList.id}"
+      >
         <app-todo-list-item [todoList]="todoList"></app-todo-list-item>
       </li>
     </ul>
@@ -49,12 +43,15 @@
         Todos
       </span>
       <span class="actions">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="showTodoForm()">
           <mat-icon>add</mat-icon>
         </button>
       </span>
     </h2>
-    <app-todos-list></app-todos-list>
+    <app-todos-list
+      [isFormShown]="isTodoFieldShown"
+      [selectedList]="selectedList"
+    ></app-todos-list>
   </div>
-  <div class="operations-overlay" *ngIf="isListFieldShown" (click)="hideListField()"></div>
+  <div class="operations-overlay" *ngIf="isListFieldShown || isTodoFieldShown" (click)="hideForms()"></div>
 </main>

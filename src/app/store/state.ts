@@ -5,6 +5,7 @@ export interface TodoList {
 }
 
 export interface Todo {
+  listID: string;
   name: string;
   isDone: boolean;
 }

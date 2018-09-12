@@ -8,7 +8,8 @@ import { BaseAction } from 'src/app/store/base-action';
 import {
   CREATE_TODO_LIST,
   REMOVE_TODO_LIST,
-  EDIT_TODO_LIST_NAME
+  EDIT_TODO_LIST_NAME,
+  SELECT_TODO_LIST
 } from '../../store/todos.reducer';
 
 @Injectable({
@@ -32,5 +33,9 @@ export class TodoListsService {
 
   editTodoListName(id: string, name: string) {
     this.store.dispatch(new BaseAction(EDIT_TODO_LIST_NAME, { id, name }));
+  }
+
+  selectList() {
+    this.store.dispatch(new BaseAction(SELECT_TODO_LIST));
   }
 }

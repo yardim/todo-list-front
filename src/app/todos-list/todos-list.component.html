@@ -1,4 +1,11 @@
 <ul class="todos">
+  <li class="add-todo-form-wrap" *ngIf="isFormShown">
+    <app-item-adding-form
+      (addNewItem)="addNewTodo($event)"
+      [statusSwitcher]="formSwitcher"
+      [cleaner]="formCleaner">
+    </app-item-adding-form>
+  </li>
   <li class="todo" *ngFor="let todo of todos$ | async">
     <span class="content">
       {{ todo.value }}
