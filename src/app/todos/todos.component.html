@@ -50,7 +50,7 @@
     </h2>
     <app-todos-list
       [isFormShown]="isTodoFieldShown"
-      [selectedList]="selectedList"
+      [selectedList$]="selectedList$"
     ></app-todos-list>
   </div>
   <div class="operations-overlay" *ngIf="isListFieldShown || isTodoFieldShown" (click)="hideForms()"></div>

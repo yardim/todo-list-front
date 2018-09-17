@@ -19,8 +19,6 @@ export const EDIT_TODO_LIST_NAME_FAIL = 'EDIT_TODO_LIST_NAME_FAIL';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
 
-export const SELECT_TODO_LIST = 'SELECT_TODO_LIST';
-
 export function todoListsReducer(state: TodoAppState = initialTodoListsState, action: BaseAction): TodoAppState {
   let payload;
 
@@ -107,7 +105,6 @@ export function todoListsReducer(state: TodoAppState = initialTodoListsState, ac
 
     case CREATE_TODO_LIST_FAIL:
     case EDIT_TODO_LIST_NAME_FAIL:
-    case SELECT_TODO_LIST:
       return { ...state };
 
     default:

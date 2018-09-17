@@ -21,6 +21,7 @@ export class TodosComponent implements OnInit {
   public userName = '';
   public formSwitcher: BehaviorSubject<boolean> = new BehaviorSubject(true);
   public formCleaner: Subject<void> = new Subject();
+  public selectedList$: Subject<string> = new Subject();
   public selectedList: string;
 
   constructor(
@@ -42,8 +43,8 @@ export class TodosComponent implements OnInit {
         this.formSwitcher.next(true);
 
         if (state.todoLists.length) {
-          console.log(state.todoLists[0].id);
-          // this.selectList(state.todoLists[0].id);
+          const listID = state.todoLists[0].id;
+          this.selectList(listID);
         }
 
         return state.todoLists;
@@ -75,7 +76,7 @@ export class TodosComponent implements OnInit {
   }
 
   selectList(listID: string) {
+    this.selectedList$.next(listID);
     this.selectedList = listID;
-    this.todoListsService.selectList();
   }
 }

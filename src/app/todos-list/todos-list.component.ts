@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
+import { map, mergeMap, filter } from 'rxjs/operators';
 import { TodoAppState, Todo } from '../store/state';
 
 @Component({
@@ -14,17 +14,20 @@ export class TodosListComponent implements OnInit {
   public formSwitcher: BehaviorSubject<boolean> = new BehaviorSubject(true);
   public formCleaner: Subject<void> = new Subject();
   @Input() public isFormShown: boolean;
-  @Input() public selectedList: string;
+  @Input() public selectedList$: Subject<string>;
 
   constructor(private store: Store<TodoAppState>) { }
 
   public ngOnInit(): void {
-    this.todos$ = this.store.pipe(
+    const allTodos$ = this.store.pipe(
       select('todos'),
-      map((state: TodoAppState): Todo[] => state.todos.filter((todo: Todo) => {
-        // todo.listID === this.selectedList
-        return true;
-      }))
+      map((state: TodoAppState): Todo[] => state.todos),
+    );
+
+    this.todos$ = this.selectedList$.pipe(
+      mergeMap(listID => allTodos$.pipe(
+        map((todos: Todo[]) => todos.filter(todo => todo.listID === listID))
+      ))
     );
   }
 
