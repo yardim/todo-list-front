@@ -6,6 +6,9 @@ export const BE_ROUTES = {
   createList: '/todo-lists/create',
   deleteList: '/todo-lists/delete/',
   updateList: '/todo-lists/update/',
+  createTodo: '/todos/create/',
+  deleteTodo: '/todos/delete/',
+  updateTodo: '/todos/update/',
 };
 
 export const STORAGE_KEYS = {

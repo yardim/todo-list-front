@@ -17,6 +17,18 @@ export const EDIT_TODO_LIST_NAME = 'EDIT_TODO_LIST_NAME';
 export const EDIT_TODO_LIST_NAME_SUCCESS = 'EDIT_TODO_LIST_NAME_SUCCESS';
 export const EDIT_TODO_LIST_NAME_FAIL = 'EDIT_TODO_LIST_NAME_FAIL';
 
+export const CREATE_TODO = 'CREATE_TODO';
+export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS';
+export const CREATE_TODO_FAIL = 'CREATE_TODO_FAIL';
+
+export const REMOVE_TODO = 'REMOVE_TODO';
+export const REMOVE_TODO_SUCCESS = 'REMOVE_TODO_SUCCESS';
+export const REMOVE_TODO_FAIL = 'REMOVE_TODO_FAIL';
+
+export const EDIT_TODO = 'EDIT_TODO';
+export const EDIT_TODO_SUCCESS = 'EDIT_TODO_SUCCESS';
+export const EDIT_TODO_FAIL = 'EDIT_TODO_FAIL';
+
 export const CLEAR_STATE = 'CLEAR_STATE';
 
 export function todoListsReducer(state: TodoAppState = initialTodoListsState, action: BaseAction): TodoAppState {

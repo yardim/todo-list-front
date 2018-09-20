@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { STORAGE_KEYS, BE_ROUTES } from '../../config/config';
+import { STORAGE_KEYS } from '../../config/config';
 import { Store } from '@ngrx/store';
 import { TodoAppState } from 'src/app/store/state';
 import { BaseAction } from 'src/app/store/base-action';

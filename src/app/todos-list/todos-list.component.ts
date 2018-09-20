@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { map, mergeMap, filter } from 'rxjs/operators';
+import { map, mergeMap, filter, tap } from 'rxjs/operators';
 import { TodoAppState, Todo } from '../store/state';
+import { TodosService } from '../services/todos/todos.service';
 
 @Component({
   selector: 'app-todos-list',
@@ -16,7 +17,12 @@ export class TodosListComponent implements OnInit {
   @Input() public isFormShown: boolean;
   @Input() public selectedList$: Subject<string>;
 
-  constructor(private store: Store<TodoAppState>) { }
+  private currentListID: string;
+
+  constructor(
+    private store: Store<TodoAppState>,
+    private todosService: TodosService
+  ) { }
 
   public ngOnInit(): void {
     const allTodos$ = this.store.pipe(
@@ -25,6 +31,7 @@ export class TodosListComponent implements OnInit {
     );
 
     this.todos$ = this.selectedList$.pipe(
+      tap(listID => this.currentListID = listID),
       mergeMap(listID => allTodos$.pipe(
         map((todos: Todo[]) => todos.filter(todo => todo.listID === listID))
       ))
@@ -33,10 +40,15 @@ export class TodosListComponent implements OnInit {
 
   public addNewTodo(todo: string): void {
     this.formSwitcher.next(false);
+    this.todosService.createNewTodo(todo, this.currentListID);
 
     setTimeout(() => {
-      this.formCleaner.next();
-      this.formSwitcher.next(true);
+      console.log(this.currentListID);
     }, 2000);
+  }
+
+  private hideForm() {
+    this.formCleaner.next();
+    this.formSwitcher.next(true);
   }
 }

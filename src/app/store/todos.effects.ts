@@ -18,11 +18,12 @@ import {
   LOAD_STATE_FAIL,
   EDIT_TODO_LIST_NAME,
   EDIT_TODO_LIST_NAME_SUCCESS,
-  EDIT_TODO_LIST_NAME_FAIL
+  EDIT_TODO_LIST_NAME_FAIL,
+  CREATE_TODO,
+  CREATE_TODO_SUCCESS
 } from 'src/app/store/todos.reducer';
 import { BE_ROUTES, STORAGE_KEYS } from 'src/app/config/config';
 import { catchError } from 'rxjs/internal/operators/catchError';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
 
 @Injectable()
 export class TodosEffects {
@@ -48,7 +49,7 @@ export class TodosEffects {
           this.router.navigateByUrl('/enter');
           return of(new BaseAction(LOAD_STATE_FAIL));
         })
-      )
+      );
     })
   );
 
@@ -66,12 +67,12 @@ export class TodosEffects {
         catchError(
           (err) => {
             console.error(err);
-            return of(new BaseAction(CREATE_TODO_LIST_FAIL))
+            return of(new BaseAction(CREATE_TODO_LIST_FAIL));
           }
         )
       );
     })
-  )
+  );
 
   @Effect()
   public removeTodoList$: Observable<BaseAction> = this.actions$.pipe(
@@ -83,10 +84,10 @@ export class TodosEffects {
       return this.http.delete(`${url}${id}`);
     }),
     map(data => {
-      return new BaseAction(REMOVE_TODO_LIST_SUCCESS, data)
+      return new BaseAction(REMOVE_TODO_LIST_SUCCESS, data);
     }),
     catchError(() => of(new BaseAction(REMOVE_TODO_LIST_FAIL)))
-  )
+  );
 
   @Effect()
   public editTodoListName$: Observable<BaseAction> = this.actions$.pipe(
@@ -100,8 +101,25 @@ export class TodosEffects {
       });
     }),
     map(data => {
-      return new BaseAction(EDIT_TODO_LIST_NAME_SUCCESS, data)
+      return new BaseAction(EDIT_TODO_LIST_NAME_SUCCESS, data);
     }),
     catchError(() => of(new BaseAction(EDIT_TODO_LIST_NAME_FAIL)))
-  )
+  );
+
+  @Effect()
+  public createNewTodo: Observable<BaseAction> = this.actions$.pipe(
+    ofType(CREATE_TODO),
+    mergeMap((action: BaseAction): any => {
+      const listID = action.payload.listID;
+      const value = action.payload.value;
+      const url = `${BE_ROUTES.base}${BE_ROUTES.createTodo}${listID}`;
+      console.log(url);
+
+      return this.http.post(url, { value });
+    }),
+    map(data => {
+      console.log(data);
+      return new BaseAction(CREATE_TODO_SUCCESS, data);
+    })
+  );
 }
